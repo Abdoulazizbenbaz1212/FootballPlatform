@@ -3,41 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Créer un compte</title>
-
-    <link rel="stylesheet"
-          href="{{ url_for('static', filename='css/style.css') }}">
+    <title>Créer un compte — Football Platform</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
 
 <body>
 
 <main class="auth-container">
-
     <div class="auth-card">
 
         <div class="auth-logo">⚽</div>
 
         <h1>Créer ton compte</h1>
-
         <p>Rejoins la communauté football.</p>
 
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-                <div class="messages">
-                    {% for message in messages %}
-                        <div>{{ message }}</div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
+        <div id="message" class="messages"></div>
 
-        <form method="POST">
+        <form id="registerForm">
 
             <label>Pseudo</label>
-
             <input
                 type="text"
+                id="username"
                 name="username"
                 placeholder="Ton pseudo"
                 minlength="3"
@@ -46,25 +33,35 @@
             >
 
             <label>Email</label>
-
             <input
                 type="email"
+                id="email"
                 name="email"
                 placeholder="ton@email.com"
                 required
             >
 
             <label>Mot de passe</label>
-
             <input
                 type="password"
+                id="password"
                 name="password"
                 placeholder="Minimum 8 caractères"
                 minlength="8"
                 required
             >
 
-            <button type="submit">
+            <label>Confirmer le mot de passe</label>
+            <input
+                type="password"
+                id="confirm_password"
+                name="confirm_password"
+                placeholder="Retape ton mot de passe"
+                minlength="8"
+                required
+            >
+
+            <button type="submit" id="registerButton">
                 Créer mon compte
             </button>
 
@@ -76,8 +73,75 @@
         </p>
 
     </div>
-
 </main>
+
+<script type="module">
+import {
+    auth,
+    createUserWithEmailAndPassword,
+    sendEmailVerification
+} from "{{ url_for('static', filename='js/firebase.js') }}";
+
+const form = document.getElementById("registerForm");
+const message = document.getElementById("message");
+const button = document.getElementById("registerButton");
+
+form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword = document.getElementById("confirm_password").value;
+
+    message.textContent = "";
+
+    if (password !== confirmPassword) {
+        message.textContent = "❌ Les deux mots de passe ne correspondent pas.";
+        return;
+    }
+
+    if (password.length < 8) {
+        message.textContent = "❌ Le mot de passe doit contenir au moins 8 caractères.";
+        return;
+    }
+
+    button.disabled = true;
+    button.textContent = "Création du compte...";
+
+    try {
+        const userCredential =
+            await createUserWithEmailAndPassword(auth, email, password);
+
+        await sendEmailVerification(userCredential.user);
+
+        message.textContent =
+            "✅ Compte créé ! Un email de vérification vient d'être envoyé à " +
+            email + ".";
+
+        form.reset();
+
+        setTimeout(() => {
+            window.location.href = "{{ url_for('login') }}";
+        }, 2500);
+
+    } catch (error) {
+
+        if (error.code === "auth/email-already-in-use") {
+            message.textContent = "❌ Cette adresse email est déjà utilisée.";
+        } else if (error.code === "auth/invalid-email") {
+            message.textContent = "❌ Adresse email invalide.";
+        } else if (error.code === "auth/weak-password") {
+            message.textContent = "❌ Mot de passe trop faible.";
+        } else {
+            message.textContent = "❌ Erreur : " + error.message;
+        }
+
+        button.disabled = false;
+        button.textContent = "Créer mon compte";
+    }
+});
+</script>
 
 </body>
 </html>
