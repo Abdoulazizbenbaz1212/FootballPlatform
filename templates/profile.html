@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mon profil</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<header class="topbar">
+
+    <div class="logo">⚽ Football Platform</div>
+
+    <a href="{{ url_for('logout') }}"
+       class="login-btn">
+        Déconnexion
+    </a>
+
+</header>
+
+<main class="profile-container">
+
+    <div class="profile-card">
+
+        <div class="avatar">
+            👤
+        </div>
+
+        <h1>@{{ user.username }}</h1>
+
+        <p>{{ user.bio or "Passionné de football ⚽" }}</p>
+
+        <div class="profile-stats">
+
+            <div>
+                <strong>{{ user.points }}</strong>
+                <span>Points</span>
+            </div>
+
+            <div>
+                <strong>{{ user.level }}</strong>
+                <span>Niveau</span>
+            </div>
+
+        </div>
+
+        <div class="profile-actions">
+
+            <button>📝 Publier</button>
+
+            <button>⚽ Jouer</button>
+
+        </div>
+
+    </div>
+
+</main>
+
+</body>
+</html>
