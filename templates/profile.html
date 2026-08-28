@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mon profil</title>
+    <title>Mon profil - Football Platform</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
@@ -16,16 +16,17 @@
 
     <div class="logo">⚽ Football Platform</div>
 
-    <a href="{{ url_for('logout') }}"
-       class="login-btn">
+    <a href="{{ url_for('logout') }}" class="login-btn">
         Déconnexion
     </a>
 
 </header>
 
+
 <main class="profile-container">
 
-    <div class="profile-card">
+    <!-- PROFIL -->
+    <section class="profile-card">
 
         <div class="avatar">
             👤
@@ -33,33 +34,181 @@
 
         <h1>@{{ user.username }}</h1>
 
-        <p>{{ user.bio or "Passionné de football ⚽" }}</p>
+        <p>
+            {{ user.bio or "Passionné de football ⚽" }}
+        </p>
 
         <div class="profile-stats">
 
             <div>
                 <strong>{{ user.points }}</strong>
-                <span>Points</span>
+                <span>⭐ Points</span>
             </div>
 
             <div>
                 <strong>{{ user.level }}</strong>
-                <span>Niveau</span>
+                <span>🏆 Niveau</span>
+            </div>
+
+            <div>
+                <strong>{{ referral_count }}</strong>
+                <span>👥 Filleuls</span>
             </div>
 
         </div>
 
         <div class="profile-actions">
 
-            <button>📝 Publier</button>
+            <a href="#" class="action-btn">
+                📝 Publier
+            </a>
 
-            <button>⚽ Jouer</button>
+            <a href="#" class="action-btn">
+                ⚽ Jouer
+            </a>
 
         </div>
 
-    </div>
+    </section>
+
+
+    <!-- NAVIGATION -->
+    <section class="menu-card">
+
+        <h2>Football</h2>
+
+        <a href="/">
+            🏠 Accueil
+        </a>
+
+        <a href="#">
+            📰 Actualités
+        </a>
+
+        <a href="#">
+            ⚽ Matchs
+        </a>
+
+        <a href="#">
+            🏆 Classements
+        </a>
+
+        <a href="#">
+            👤 Joueurs
+        </a>
+
+        <a href="#">
+            🎮 Jeux
+        </a>
+
+    </section>
+
+
+    <!-- PARRAINAGE -->
+    <section class="feature-card">
+
+        <h2>🎁 Parrainage</h2>
+
+        <p>
+            Invite tes amis et gagne des points.
+        </p>
+
+        <div class="referral-box">
+
+            <span>Ton code</span>
+
+            <strong>
+                {{ user.referral_code }}
+            </strong>
+
+        </div>
+
+        <input
+            type="text"
+            value="{{ referral_link }}"
+            readonly
+            onclick="this.select()"
+        >
+
+        <button
+            class="action-btn"
+            onclick="copyReferral()"
+        >
+            📋 Copier mon lien
+        </button>
+
+        <p>
+            👥 {{ referral_count }} filleul(s)
+        </p>
+
+        <p>
+            ⭐ {{ user.referral_points }} points gagnés
+        </p>
+
+    </section>
+
+
+    <!-- SÉCURITÉ -->
+    <section class="feature-card">
+
+        <h2>🔐 Sécurité</h2>
+
+        <p>
+            Protège ton compte avec des fonctionnalités
+            de sécurité supplémentaires.
+        </p>
+
+        <a href="#" class="action-btn">
+            🔐 Configurer la 2FA
+        </a>
+
+        <a href="#" class="action-btn">
+            🔑 Modifier le mot de passe
+        </a>
+
+    </section>
+
+
+    <!-- PUBLICATIONS -->
+    <section class="feature-card">
+
+        <h2>🗣️ Mes publications</h2>
+
+        <div class="empty-state">
+
+            <div>📝</div>
+
+            <p>
+                Tu n'as encore aucune publication.
+            </p>
+
+            <button class="action-btn">
+                Créer une publication
+            </button>
+
+        </div>
+
+    </section>
 
 </main>
+
+
+<script>
+
+function copyReferral() {
+
+    const input = document.querySelector(
+        'input[readonly]'
+    );
+
+    navigator.clipboard.writeText(
+        input.value
+    );
+
+    alert("✅ Lien de parrainage copié !");
+}
+
+</script>
 
 </body>
 </html>
