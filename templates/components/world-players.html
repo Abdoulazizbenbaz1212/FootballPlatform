@@ -1,0 +1,85 @@
+<section class="world-players" id="worldPlayers">
+
+    <div class="world-players-header">
+
+        <div>
+            <span class="section-kicker">🌍 WORLD FOOTBALL</span>
+
+            <h2>
+                Tous les joueurs du monde
+            </h2>
+
+            <p>
+                Des légendes historiques aux stars actuelles.
+            </p>
+        </div>
+
+        <div class="players-counter">
+            <strong id="playersTotal">0</strong>
+            <span>joueurs</span>
+        </div>
+
+    </div>
+
+
+    <div class="players-toolbar">
+
+        <div class="player-search">
+
+            <span>🔎</span>
+
+            <input
+                id="playerSearch"
+                type="search"
+                placeholder="Rechercher Messi, Eto'o, Ronaldo..."
+                autocomplete="off"
+            >
+
+        </div>
+
+
+        <select id="playerCountry">
+            <option value="all">
+                🌍 Tous les pays
+            </option>
+        </select>
+
+
+        <select id="playerPosition">
+            <option value="all">
+                ⚽ Toutes les positions
+            </option>
+        </select>
+
+    </div>
+
+
+    <div
+        id="playersGrid"
+        class="players-grid-3d"
+    ></div>
+
+
+    <div class="players-pagination">
+
+        <button
+            id="playersPrevious"
+            type="button"
+        >
+            ← Précédent
+        </button>
+
+        <span id="playersPage">
+            Page 1
+        </span>
+
+        <button
+            id="playersNext"
+            type="button"
+        >
+            Suivant →
+        </button>
+
+    </div>
+
+</section>

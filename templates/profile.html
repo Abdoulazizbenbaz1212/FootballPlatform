@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Mon profil - Football Platform</title>
+    <title>Mon profil — Football Platform</title>
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
@@ -13,199 +13,184 @@
 <body>
 
 <header class="topbar">
-
-    <div class="logo">⚽ Football Platform</div>
-
-    <a href="{{ url_for('logout') }}" class="login-btn">
-        Déconnexion
+    <a href="{{ url_for('home') }}" class="brand">
+        ⚽ Football Platform
     </a>
 
+    <a href="{{ url_for('logout') }}" class="logout-btn">
+        Déconnexion
+    </a>
 </header>
-
 
 <main class="profile-container">
 
-    <!-- PROFIL -->
     <section class="profile-card">
 
-        <div class="avatar">
-            👤
+        <div class="profile-avatar">
+            {{ current_user.username[0]|upper }}
         </div>
 
-        <h1>@{{ user.username }}</h1>
+        <h1>{{ current_user.username }}</h1>
 
-        <p>
-            {{ user.bio or "Passionné de football ⚽" }}
+        <p class="profile-email">
+            {{ current_user.email }}
         </p>
+
+        <div class="profile-level">
+            🏆 {{ current_user.level }}
+        </div>
 
         <div class="profile-stats">
 
             <div>
-                <strong>{{ user.points }}</strong>
-                <span>⭐ Points</span>
-            </div>
-
-            <div>
-                <strong>{{ user.level }}</strong>
-                <span>🏆 Niveau</span>
+                <strong>{{ current_user.points }}</strong>
+                <span>Points</span>
             </div>
 
             <div>
                 <strong>{{ referral_count }}</strong>
-                <span>👥 Filleuls</span>
+                <span>Filleuls</span>
+            </div>
+
+            <div>
+                <strong>{{ current_user.referral_points }}</strong>
+                <span>Parrainage</span>
             </div>
 
         </div>
 
-        <div class="profile-actions">
+    </section>
 
-            <a href="#" class="action-btn">
-                📝 Publier
-            </a>
 
-            <a href="#" class="action-btn">
-                ⚽ Jouer
-            </a>
+    <section class="referral-card">
 
+        <div class="section-icon">
+            🎁
         </div>
 
-    </section>
-
-
-    <!-- NAVIGATION -->
-    <section class="menu-card">
-
-        <h2>Football</h2>
-
-        <a href="/">
-            🏠 Accueil
-        </a>
-
-        <a href="#">
-            📰 Actualités
-        </a>
-
-        <a href="#">
-            ⚽ Matchs
-        </a>
-
-        <a href="#">
-            🏆 Classements
-        </a>
-
-        <a href="#">
-            👤 Joueurs
-        </a>
-
-        <a href="#">
-            🎮 Jeux
-        </a>
-
-    </section>
-
-
-    <!-- PARRAINAGE -->
-    <section class="feature-card">
-
-        <h2>🎁 Parrainage</h2>
+        <h2>Invite tes amis</h2>
 
         <p>
-            Invite tes amis et gagne des points.
+            Partage ton lien et gagne des points
+            lorsque tes amis rejoignent Football Platform.
         </p>
 
-        <div class="referral-box">
-
-            <span>Ton code</span>
-
-            <strong>
-                {{ user.referral_code }}
-            </strong>
-
+        <div class="referral-code">
+            {{ current_user.referral_code }}
         </div>
 
-        <input
-            type="text"
-            value="{{ referral_link }}"
-            readonly
-            onclick="this.select()"
-        >
+        <div class="referral-link-box">
+            <input
+                type="text"
+                id="referralLink"
+                value="{{ referral_link }}"
+                readonly
+            >
 
-        <button
-            class="action-btn"
-            onclick="copyReferral()"
-        >
-            📋 Copier mon lien
-        </button>
-
-        <p>
-            👥 {{ referral_count }} filleul(s)
-        </p>
-
-        <p>
-            ⭐ {{ user.referral_points }} points gagnés
-        </p>
-
-    </section>
-
-
-    <!-- SÉCURITÉ -->
-    <section class="feature-card">
-
-        <h2>🔐 Sécurité</h2>
-
-        <p>
-            Protège ton compte avec des fonctionnalités
-            de sécurité supplémentaires.
-        </p>
-
-        <a href="#" class="action-btn">
-            🔐 Configurer la 2FA
-        </a>
-
-        <a href="#" class="action-btn">
-            🔑 Modifier le mot de passe
-        </a>
-
-    </section>
-
-
-    <!-- PUBLICATIONS -->
-    <section class="feature-card">
-
-        <h2>🗣️ Mes publications</h2>
-
-        <div class="empty-state">
-
-            <div>📝</div>
-
-            <p>
-                Tu n'as encore aucune publication.
-            </p>
-
-            <button class="action-btn">
-                Créer une publication
+            <button type="button" onclick="copyReferral()">
+                📋 Copier
             </button>
-
         </div>
+
+        <p id="copyMessage" class="copy-message"></p>
+
+    </section>
+
+
+    <section class="profile-menu">
+
+        <a href="{{ url_for('home') }}">
+            <span>🏠</span>
+            <div>
+                <strong>Accueil</strong>
+                <small>Retour à Football Platform</small>
+            </div>
+            <b>›</b>
+        </a>
+
+        <a href="#">
+            <span>⚽</span>
+            <div>
+                <strong>Mes activités</strong>
+                <small>Votes, commentaires et matchs</small>
+            </div>
+            <b>›</b>
+        </a>
+
+        <a href="#">
+            <span>🏆</span>
+            <div>
+                <strong>Mes récompenses</strong>
+                <small>Points et niveaux</small>
+            </div>
+            <b>›</b>
+        </a>
+
+        <a href="#">
+            <span>⚙️</span>
+            <div>
+                <strong>Paramètres</strong>
+                <small>Gérer mon compte</small>
+            </div>
+            <b>›</b>
+        </a>
 
     </section>
 
 </main>
 
 
+<nav class="bottom-nav">
+
+    <a href="{{ url_for('home') }}">
+        <span>🏠</span>
+        Accueil
+    </a>
+
+    <a href="#">
+        <span>📰</span>
+        Actu
+    </a>
+
+    <a href="#">
+        <span>⚽</span>
+        Matchs
+    </a>
+
+    <a href="{{ url_for('profile') }}">
+        <span>👤</span>
+        Profil
+    </a>
+
+</nav>
+
+
 <script>
 
 function copyReferral() {
 
-    const input = document.querySelector(
-        'input[readonly]'
-    );
+    const input =
+        document.getElementById("referralLink");
 
-    navigator.clipboard.writeText(
-        input.value
-    );
+    const message =
+        document.getElementById("copyMessage");
 
-    alert("✅ Lien de parrainage copié !");
+    navigator.clipboard.writeText(input.value)
+        .then(() => {
+
+            message.textContent =
+                "✅ Lien copié !";
+
+        })
+        .catch(() => {
+
+            input.select();
+            document.execCommand("copy");
+
+            message.textContent =
+                "✅ Lien copié !";
+        });
+
 }
 
 </script>

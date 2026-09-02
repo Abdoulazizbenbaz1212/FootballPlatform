@@ -1,0 +1,38 @@
+<header class="topbar">
+
+    <a href="{{ url_for('home') }}" class="brand">
+        <span class="brand-ball">⚽</span>
+        <span>Football Platform</span>
+    </a>
+
+    <nav class="desktop-nav">
+
+        <a href="{{ url_for('home') }}">
+            🏠 Accueil
+        </a>
+
+        <a href="#">
+            📰 Actualités
+        </a>
+
+        <a href="#">
+            ⚽ Matchs
+        </a>
+
+        <a href="#">
+            🏆 Classements
+        </a>
+
+        {% if current_user.is_authenticated %}
+            <a href="{{ url_for('profile') }}">
+                👤 Profil
+            </a>
+        {% else %}
+            <a href="{{ url_for('login') }}">
+                Connexion
+            </a>
+        {% endif %}
+
+    </nav>
+
+</header>

@@ -8,39 +8,11 @@
 
     <link rel="stylesheet"
           href="{{ url_for('static', filename='css/style.css') }}">
-
-<style>
-/* =====================================================
-   FOOTBALLPLATFORM — ISOLATION DES ESPACES
-===================================================== */
-
-#legacyFootballPlatform {
-    position: relative;
-    z-index: 1;
-}
-
-body.space-game-mode #legacyFootballPlatform,
-body.space-videos-mode #legacyFootballPlatform,
-body.space-news-mode #legacyFootballPlatform {
-    display: none !important;
-}
-
-body.space-home-mode #legacyFootballPlatform {
-    display: block;
-}
-
-body.space-game-mode #appSpaces,
-body.space-videos-mode #appSpaces,
-body.space-news-mode #appSpaces {
-    min-height: 100vh;
-}
-
-</style>
-\n</head>
+</head>
 
 
 
-<body class="space-home-mode">
+<body>
 
 <!-- =====================================================
      FOOTBALLPLATFORM — ESPACES PRINCIPAUX
@@ -227,10 +199,6 @@ body.space-news-mode #appSpaces {
 <!-- FIN DES NOUVEAUX ESPACES -->
 
 
-<!-- =====================================================
-     ANCIEN FOOTBALLPLATFORM — ESPACE ACCUEIL
-===================================================== -->
-<div id="legacyFootballPlatform">
 <div class="stadium-3d">
 
     <canvas id="stadium3d"></canvas>
@@ -969,31 +937,35 @@ src="{{ url_for('static', filename='js/players.js') }}">
 
 {% include "components/player-modal.html" %}
 {% include "components/goalkeeper-arena.html" %}
-
-</div>
-
-
+</body>
+</html>
 
 <script src="{{ url_for('static', filename='js/3d/intro-3d.js') }}"></script>
 
 <script src="{{ url_for('static', filename='js/game/shot-controller.js') }}"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    if (window.ShotController) {
-        window.ShotController.init();
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+        if (window.ShotController) {
+            window.ShotController.init();
+        }
     }
-});
+);
 </script>
 
 <script src="{{ url_for('static', filename='js/game/shot-match.js') }}"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    if (window.ShotMatch) {
-        window.ShotMatch.init();
+document.addEventListener(
+    "DOMContentLoaded",
+    () => {
+        if (window.ShotMatch) {
+            window.ShotMatch.init();
+        }
     }
-});
+);
 </script>
 
 <script>
@@ -1018,15 +990,6 @@ document.addEventListener("DOMContentLoaded", function () {
             spaces[name].classList.add("active");
         }
 
-        document.body.classList.remove(
-            "space-home-mode",
-            "space-game-mode",
-            "space-videos-mode",
-            "space-news-mode"
-        );
-
-        document.body.classList.add("space-" + name + "-mode");
-
         window.scrollTo({
             top: 0,
             behavior: "smooth"
@@ -1041,9 +1004,8 @@ document.addEventListener("DOMContentLoaded", function () {
             return;
         }
 
-        event.preventDefault();
-
         showSpace(button.dataset.space);
+
     });
 
     window.FootballPlatformSpaces = {
@@ -1052,5 +1014,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 </script>
-</body>
-</html>

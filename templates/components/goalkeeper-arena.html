@@ -1,0 +1,73 @@
+<section class="goalkeeper-arena" id="goalkeeperArena">
+
+    <div class="arena-header">
+        <div>
+            <span>⚽ FOOTBALL 3D</span>
+            <h2>Défi du gardien</h2>
+            <p>Teste le gardien face à une série de tirs.</p>
+        </div>
+
+        <div class="arena-score">
+            <strong id="arenaGoals">0</strong>
+            <small>BUTS</small>
+        </div>
+
+        <div class="arena-score">
+            <strong id="arenaSaves">0</strong>
+            <small>ARRÊTS</small>
+        </div>
+    </div>
+
+    <div class="football-pitch-3d">
+
+        <div class="goal-net">
+            <div class="goal-post left"></div>
+            <div class="goal-post right"></div>
+            <div class="goal-crossbar"></div>
+            <div class="net"></div>
+        </div>
+
+        <div class="goalkeeper-3d" id="goalkeeper3D">
+            🧤
+        </div>
+
+        <div class="football-3d" id="football3D">
+            ⚽
+        </div>
+
+        <div class="shot-target" id="shotTarget"></div>
+
+    </div>
+
+    <div class="shot-controls">
+
+        <div
+            class="shot-aim-area"
+            id="shotAimArea"
+        >
+            <div class="aim-instruction">
+                👆 Trace avec ton doigt pour tirer
+            </div>
+
+            <div
+                class="aim-line"
+                id="aimLine"
+            ></div>
+
+            <div
+                class="aim-point"
+                id="aimPoint"
+            ></div>
+        </div>
+
+    </div>
+
+    <div
+        class="shot-result"
+        id="shotResult"
+        aria-live="polite"
+    >
+        Choisis une direction.
+    </div>
+
+</section>
